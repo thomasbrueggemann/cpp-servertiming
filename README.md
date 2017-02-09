@@ -27,7 +27,7 @@ timing.stopTimer("Database Query");
 
 // you can also add metrics without the timer function
 // the time value is always in milliseconds!
-timing.addMetric("Image Processing", 12847)
+timing.addMetric("Image Processing", 12365)
 
 // ... use the header string within your server framework or whatever
 std::string header = timing.generateHeader();
