@@ -1,5 +1,5 @@
 # Server-Timing
-Generate Server-Timing headers interactively in modern C++
+Generate Server-Timing headers interactively in modern C++11
 
 Inpired by:
 
@@ -18,5 +18,20 @@ You'll need a modern C++11 compatible compiler though.
 ```cpp
 #include "servertiming.hpp"
 
+ServerTiming timing();
+timing.startTimer("Database Query");
 
+// ... do something work-intensive
+
+timing.stopTimer("Database Query");
+
+// you can also add metrics without the timer function
+// the time value is always in milliseconds!
+timing.addMetric("Image Processing", 12847)
+
+// ... use the header string within your server framework or whatever
+std::string header = timing.generateHeader();
+
+// this will output:
+// database-query=0.122; "Database Query",image-processing=12.365; "Image Processing"
 ```
