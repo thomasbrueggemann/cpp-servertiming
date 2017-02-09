@@ -1,6 +1,7 @@
 #ifndef SERVERTIMING_HPP
 #define SERVERTIMING_HPP
 
+#include <iostream>
 #include <string>
 #include <algorithm>
 #include <unordered_map>
@@ -16,6 +17,7 @@ private:
 	std::unordered_map<std::string, std::string> metrics;
 	std::unordered_map<std::string, unsigned int> timer;
 	std::unordered_map<std::string, unsigned int> times;
+	bool printTimes;
 
 	// SLUGIFY
 	// see https://github.com/thomasbrueggemann/cpp-slugify
@@ -113,8 +115,31 @@ private:
 		return input;
 	};
 
+	// PRINT NUMBER
+	std::string printNumber(unsigned int input)
+	{
+		std::string value = std::to_string((double)input / 1000.0);
+		value.erase(value.find_last_not_of('0') + 1, std::string::npos);
+
+		if(value[value.length()-1] == '.')
+		{
+			value.pop_back();
+		}
+
+		return value;
+	}
 
 public:
+
+	ServerTiming()
+	{
+		printTimes = false;
+	};
+
+	ServerTiming(bool pTimes)
+	{
+		printTimes = pTimes;
+	};
 
 	// START TIMER
 	bool startTimer(std::string name)
@@ -162,6 +187,12 @@ public:
 		times[slug] = now.count() - timer[slug];
 		timer.erase(slug);
 
+		// print times to stdout
+		if(printTimes == true)
+		{
+			std::cout << metrics[slug] << ": " << printNumber(times[slug]) << "s" << std::endl;
+		}
+
 		return true;
 	};
 
@@ -187,15 +218,7 @@ public:
 		// loop metrics
 		for(auto kv : metrics)
 		{
-			std::string value = std::to_string((double)times[kv.first] / 1000.0);
-			value.erase(value.find_last_not_of('0') + 1, std::string::npos);
-
-			if(value[value.length()-1] == '.')
-			{
-				value.pop_back();
-			}
-
-			header += kv.first + "=" + value + "; \"" + kv.second + "\",";
+			header += kv.first + "=" + printNumber(times[kv.first]) + "; \"" + kv.second + "\",";
 		}
 
 		// remove trailing comma and return header string

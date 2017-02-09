@@ -4,7 +4,7 @@
 #include "catch.hpp"
 #include "servertiming.hpp"
 
-ServerTiming timing;
+ServerTiming timing(true);
 
 TEST_CASE("Start a timer", "[ServerTiming]" ) {
 
