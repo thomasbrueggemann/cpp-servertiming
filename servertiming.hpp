@@ -199,6 +199,10 @@ public:
 	// READ TIMES
 	double readTimes(std::string name)
 	{
+		// slugify name
+		std::string slug = slugify(name);
+		std::transform(slug.begin(), slug.end(), slug.begin(), ::tolower);
+
 		// check if time even exists
 		if(times.find(slug) == times.end())
 		{
