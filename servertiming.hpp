@@ -196,6 +196,18 @@ public:
 		return true;
 	};
 
+	// READ TIMES
+	double readTimes(std::string name)
+	{
+		// check if time even exists
+		if(times.find(slug) == times.end())
+		{
+			return -1.0;
+		}
+
+		return (double)times[slug];
+	};
+
 	// ADD METRIC
 	bool addMetric(std::string name, unsigned int value)
 	{
