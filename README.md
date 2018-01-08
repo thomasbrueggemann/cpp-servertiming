@@ -33,5 +33,5 @@ timing.addMetric("Image Processing", 12365)
 std::string header = timing.generateHeader();
 
 // this will output:
-// database-query=0.122; "Database Query",image-processing=12.365; "Image Processing"
+// database-query;dur=0.122;desc="Database Query",image-processing;dur=12.365;desc="Image Processing"
 ```

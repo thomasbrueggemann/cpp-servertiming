@@ -234,7 +234,7 @@ public:
 		// loop metrics
 		for(auto kv : metrics)
 		{
-			header += kv.first + "=" + printNumber(times[kv.first]) + "; \"" + kv.second + "\",";
+			header += kv.first + ";dur=" + printNumber(times[kv.first]) + ";desc=\"" + kv.second + "\",";
 		}
 
 		// remove trailing comma and return header string
